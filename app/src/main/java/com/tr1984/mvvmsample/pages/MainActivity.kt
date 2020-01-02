@@ -1,7 +1,8 @@
-package com.tr1984.mvvmsample
+package com.tr1984.mvvmsample.pages
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.tr1984.mvvmsample.R
 
 class MainActivity : AppCompatActivity() {
 
