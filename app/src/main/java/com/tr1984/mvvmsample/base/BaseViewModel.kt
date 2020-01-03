@@ -3,7 +3,7 @@ package com.tr1984.mvvmsample.base
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
 
-class BaseViewModel {
+open class BaseViewModel {
 
     var popupSubject = PublishSubject.create<PopupBundle>()
     var errorSubject = PublishSubject.create<ErrorBundle>()
