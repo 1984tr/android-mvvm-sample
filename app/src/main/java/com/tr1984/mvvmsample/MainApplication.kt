@@ -1,4 +1,8 @@
 package com.tr1984.mvvmsample
 
-class MainApplication {
+import android.app.Application
+
+class MainApplication : Application() {
+
+
 }

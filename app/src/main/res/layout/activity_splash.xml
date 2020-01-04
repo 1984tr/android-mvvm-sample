@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.tr1984.mvvmsample.pages.main.MainViewModel" />
+            type="com.tr1984.mvvmsample.pages.splash.SplashViewModel" />
 
     </data>
 
@@ -14,10 +14,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="main"
+            android:src="@mipmap/ic_launcher"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

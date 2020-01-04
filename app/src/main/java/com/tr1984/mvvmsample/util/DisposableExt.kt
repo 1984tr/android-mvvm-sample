@@ -1,4 +1,4 @@
-package com.tr1984.mvvmsample.tools
+package com.tr1984.mvvmsample.util
 
 import io.reactivex.Completable
 import io.reactivex.Maybe
