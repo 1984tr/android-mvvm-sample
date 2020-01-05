@@ -15,13 +15,42 @@
         android:layout_height="match_parent">
 
         <TextView
+            android:id="@+id/txt_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="main"
+            android:text="MVVM SAMPLE"
+            android:textSize="26sp"
+            app:layout_constraintBottom_toTopOf="@id/bt_list"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <Button
+            android:id="@+id/bt_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:onClick="@{() -> viewModel.moveToList()}"
+            android:text="LIST SAMPLE"
+            app:layout_constraintBottom_toTopOf="@id/bt_detail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txt_label"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <Button
+            android:id="@+id/bt_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:onClick="@{() -> viewModel.moveToDetail()}"
+            android:text="DETAIL SAMPLE"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/bt_list"
+            app:layout_constraintVertical_chainStyle="packed" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

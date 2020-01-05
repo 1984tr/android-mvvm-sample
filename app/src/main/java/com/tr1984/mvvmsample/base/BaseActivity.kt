@@ -1,15 +1,29 @@
 package com.tr1984.mvvmsample.base
 
 import android.content.Intent
+import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import com.tr1984.mvvmsample.BR
 import com.tr1984.mvvmsample.util.disposeBag
 import com.tr1984.mvvmsample.util.uiSubscribeWithError
 
-open class BaseActivity<T : BaseViewModel, VB : ViewDataBinding> : AppCompatActivity() {
+abstract class BaseActivity<T : BaseViewModel, VB : ViewDataBinding> : AppCompatActivity() {
 
-    protected lateinit var viewModel: T
+    abstract var viewModel: T
+    abstract var layoutId: Int
+
     protected lateinit var binding : VB
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = DataBindingUtil.setContentView(this, layoutId)
+        binding.setVariable(BR.viewModel, viewModel)
+        binding.executePendingBindings()
+
+        subscribeSubjects()
+    }
 
     override fun onDestroy() {
         viewModel.compositeDiposable.clear()
@@ -18,30 +32,24 @@ open class BaseActivity<T : BaseViewModel, VB : ViewDataBinding> : AppCompatActi
 
     open fun subscribeSubjects() {
         viewModel.run {
-            putPageSubject
+            startPageSubject
                 .uiSubscribeWithError {
-                    val clazz = it.first
-                    val requestCode = it.second
-                    val intent = (it.third ?: Intent()).apply {
-                        setClass(this@BaseActivity, clazz)
+                    val intent = (it.intent ?: Intent()).apply {
+                        setClass(this@BaseActivity, it.clazz)
                     }
-                    if (requestCode > 0) {
-                        startActivityForResult(intent, requestCode)
+                    if ((it.requestCode ?: 0) > 0) {
+                        startActivityForResult(intent, it.requestCode ?: 0)
                     } else {
                         startActivity(intent)
                     }
                 }.disposeBag(compositeDiposable)
 
-            popPageSubject
+            finishPageSubject
                 .uiSubscribeWithError {
-                    val resultCode = it.first
-                    val intent = it.second
-                    if (resultCode == null) {
+                    it.resultCode?.let { rc ->
+                        setResult(rc, it.intent)
                         finish()
-                    } else {
-                        setResult(resultCode, intent)
-                        finish()
-                    }
+                    } ?: finish()
                 }.disposeBag(compositeDiposable)
 
             popupSubject
