@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.tr1984.mvvmsample.BR
+import com.tr1984.mvvmsample.extensions.alert
+import com.tr1984.mvvmsample.extensions.toast
 import com.tr1984.mvvmsample.util.disposeBag
 import com.tr1984.mvvmsample.util.uiSubscribeWithError
 
@@ -14,7 +16,7 @@ abstract class BaseActivity<T : BaseViewModel, VB : ViewDataBinding> : AppCompat
     abstract var viewModel: T
     abstract var layoutId: Int
 
-    protected lateinit var binding : VB
+    protected lateinit var binding: VB
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +28,7 @@ abstract class BaseActivity<T : BaseViewModel, VB : ViewDataBinding> : AppCompat
     }
 
     override fun onDestroy() {
-        viewModel.compositeDiposable.clear()
+        viewModel.compositeDisposable.clear()
         super.onDestroy()
     }
 
@@ -42,7 +44,7 @@ abstract class BaseActivity<T : BaseViewModel, VB : ViewDataBinding> : AppCompat
                     } else {
                         startActivity(intent)
                     }
-                }.disposeBag(compositeDiposable)
+                }.disposeBag(compositeDisposable)
 
             finishPageSubject
                 .uiSubscribeWithError {
@@ -50,22 +52,32 @@ abstract class BaseActivity<T : BaseViewModel, VB : ViewDataBinding> : AppCompat
                         setResult(rc, it.intent)
                         finish()
                     } ?: finish()
-                }.disposeBag(compositeDiposable)
+                }.disposeBag(compositeDisposable)
 
             popupSubject
                 .uiSubscribeWithError {
-
-                }.disposeBag(compositeDiposable)
+                    this@BaseActivity.alert(
+                        it.title,
+                        it.message ?: "",
+                        it.positiveLabel,
+                        it.positiveCallback,
+                        it.negativeLabel,
+                        it.negativeCallback
+                    )
+                }.disposeBag(compositeDisposable)
 
             errorSubject
                 .uiSubscribeWithError {
-
-                }.disposeBag(compositeDiposable)
+                    this@BaseActivity.alert(
+                        message = it.throwable.localizedMessage,
+                        positiveCallback = it.callback
+                    )
+                }.disposeBag(compositeDisposable)
 
             toastSubject
                 .uiSubscribeWithError {
-
-                }.disposeBag(compositeDiposable)
+                    this@BaseActivity.toast(it)
+                }.disposeBag(compositeDisposable)
         }
     }
 }

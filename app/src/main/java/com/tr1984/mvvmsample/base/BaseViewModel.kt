@@ -13,7 +13,7 @@ open class BaseViewModel {
     var errorSubject = PublishSubject.create<ErrorBundle>()
     var toastSubject = PublishSubject.create<String>()
 
-    var compositeDiposable = CompositeDisposable()
+    var compositeDisposable = CompositeDisposable()
 
     class StartPageBundle(var clazz: Class<*>, var requestCode: Int? = null, var intent: Intent? = null)
 
