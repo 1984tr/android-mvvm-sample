@@ -21,5 +21,11 @@ class ListViewModel : BaseViewModel() {
                 toastSubject.onNext(it.text.toString())
             }
         })
+
+        items.add(ListType03ViewModel().apply {
+            items.add(ListType01ViewModel().apply {
+                text.set("ListType01ViewModel")
+            })
+        })
     }
 }
