@@ -9,8 +9,7 @@ class ListType03ViewModel: BaseViewModel()  {
 
     var adapter = BaseAdapter(
         hashMapOf(
-            ListType01ViewModel::class.java.simpleName to R.layout.item_list_type01,
-            ListType02ViewModel::class.java.simpleName to R.layout.item_list_type02
+            ListType01ViewModel::class.java.simpleName to R.layout.item_sublist_type01
         )
     )
     var items = ObservableArrayList<BaseViewModel>()

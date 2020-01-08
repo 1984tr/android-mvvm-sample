@@ -6,4 +6,5 @@ import com.tr1984.mvvmsample.base.BaseViewModel
 class ListType01ViewModel : BaseViewModel() {
 
     var text = ObservableField("")
+    var actionItemClick : (() -> Unit)? = null
 }
