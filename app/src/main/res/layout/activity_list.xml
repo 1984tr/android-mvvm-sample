@@ -8,10 +8,6 @@
             name="viewModel"
             type="com.tr1984.mvvmsample.pages.list.ListViewModel" />
 
-        <variable
-            name="activity"
-            type="com.tr1984.mvvmsample.pages.list.ListActivity" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,7 +17,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:adapter="@{activity.adapter}"
+            app:adapter="@{viewModel.adapter}"
             app:bindItems="@{viewModel.items}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
