@@ -7,22 +7,24 @@
 
         <variable
             name="viewModel"
-            type="com.tr1984.mvvmsample.pages.list.ListType01ViewModel" />
+            type="com.tr1984.mvvmsample.viewmodel.PlainTextViewModel" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp">
+        android:layout_height="90dp"
+        android:onClick="@{() -> viewModel.actionItemClick.invoke()}">
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="@{viewModel.text}"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            tools:text="list_type_01" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

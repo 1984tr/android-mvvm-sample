@@ -1,15 +1,15 @@
-package com.tr1984.mvvmsample.pages.list
+package com.tr1984.mvvmsample.viewmodel
 
 import androidx.databinding.ObservableArrayList
 import com.tr1984.mvvmsample.R
 import com.tr1984.mvvmsample.base.BaseAdapter
 import com.tr1984.mvvmsample.base.BaseViewModel
 
-class ListType03ViewModel: BaseViewModel()  {
+class GridRecyclerViewModel: BaseViewModel()  {
 
     var adapter = BaseAdapter(
         hashMapOf(
-            ListType01ViewModel::class.java.simpleName to R.layout.item_sublist_type01
+            PlainTextViewModel::class.java.simpleName to R.layout.item_grid_recyclerview_cell
         )
     )
     var items = ObservableArrayList<BaseViewModel>()

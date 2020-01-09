@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.tr1984.mvvmsample.pages.list.ListType03ViewModel" />
+            type="com.tr1984.mvvmsample.viewmodel.GridRecyclerViewModel" />
 
     </data>
 
