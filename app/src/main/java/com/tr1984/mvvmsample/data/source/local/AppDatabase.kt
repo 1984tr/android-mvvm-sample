@@ -4,12 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.tr1984.mvvmsample.data.Shop
+import com.tr1984.mvvmsample.data.Food
 
-@Database(entities = arrayOf(Shop::class), version = 1)
+@Database(entities = [Food::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun getShopDao(): ShopDao
+    abstract fun getShopDao(): FoodDao
 
     companion object {
 
