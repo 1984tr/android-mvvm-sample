@@ -4,26 +4,26 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.tr1984.mvvmsample.data.Shop
+import com.tr1984.mvvmsample.data.Food
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
 
 @Dao
-interface ShopDao {
+interface FoodDao {
 
-    @Query("SELECT * FROM SHOPS")
-    fun getShops(): Observable<Shop>
+    @Query("SELECT * FROM foods")
+    fun getFoods(): Observable<Food>
 
-    @Query("SELECT * FROM shops WHERE id = :id")
-    fun getShop(id: Long): Single<Shop>
+    @Query("SELECT * FROM foods WHERE id = :id")
+    fun getFood(id: Long): Single<Food>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(shop: Shop) : Completable
+    fun insert(food: Food) : Completable
 
-    @Query("DELETE FROM shops WHERE id = :id")
+    @Query("DELETE FROM foods WHERE id = :id")
     fun delete(id: Long) : Completable
 
-    @Query("DELETE FROM shops")
+    @Query("DELETE FROM foods")
     fun deleteAll() : Completable
 }
