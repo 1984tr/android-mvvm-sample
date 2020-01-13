@@ -6,7 +6,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-class ApiClient {
+class ApiClient private constructor() {
 
     private val retrofit by lazy {
         Retrofit.Builder()
@@ -17,10 +17,6 @@ class ApiClient {
             .build()
     }
 
-    private val api by lazy {
-        retrofit.create(ApiService::class.java)
-    }
-
     private val client by lazy {
         OkHttpClient().newBuilder().apply {
             connectTimeout(12, TimeUnit.SECONDS)
@@ -29,4 +25,12 @@ class ApiClient {
         }.build()
     }
 
+    val api by lazy {
+        retrofit.create(ApiService::class.java)
+    }
+
+    companion object {
+
+        var instance = ApiClient()
+    }
 }
