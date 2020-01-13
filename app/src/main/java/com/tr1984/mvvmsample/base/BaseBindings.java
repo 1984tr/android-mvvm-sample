@@ -1,15 +1,12 @@
-package com.tr1984.mvvmsample.util;
+package com.tr1984.mvvmsample.base;
 
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.ObservableArrayList;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.tr1984.mvvmsample.base.BaseAdapter;
-import com.tr1984.mvvmsample.base.BaseViewModel;
+public class BaseBindings {
 
-public class BindingAdapters {
-
-    @BindingAdapter("bindItems")
+    @BindingAdapter("app:bindItems")
     public static void bindItems(RecyclerView recyclerView, ObservableArrayList<BaseViewModel> items) {
         RecyclerView.Adapter adapter = recyclerView.getAdapter();
         if (adapter instanceof BaseAdapter) {
