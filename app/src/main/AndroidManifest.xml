@@ -3,7 +3,7 @@
     package="com.tr1984.mvvmsample">
 
     <uses-permission android:name="android.permission.INTERNET"/>
-    
+
     <application
         android:name=".MainApplication"
         android:allowBackup="true"

@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide;
 
 public class BaseBindings {
 
-    @BindingAdapter("app:bindItems")
+    @BindingAdapter("bindItems")
     public static void bindItems(RecyclerView recyclerView, ObservableArrayList<BaseViewModel> items) {
         RecyclerView.Adapter adapter = recyclerView.getAdapter();
         if (adapter instanceof BaseAdapter) {
@@ -18,8 +18,8 @@ public class BaseBindings {
         }
     }
 
-    @BindingAdapter("app:loadSimpleImage")
-    public static void loadSimpleImage(ImageView imageView, String imageUrl) {
+    @BindingAdapter("loadImage")
+    public static void loadImage(ImageView imageView, String imageUrl) {
         Glide.with(imageView).load(imageUrl).into(imageView);
     }
 }
