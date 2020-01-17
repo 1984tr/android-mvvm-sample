@@ -5,6 +5,7 @@ import com.tr1984.mvvmsample.R
 import com.tr1984.mvvmsample.base.BaseAdapter
 import com.tr1984.mvvmsample.base.BaseViewModel
 import com.tr1984.mvvmsample.data.Foods
+import com.tr1984.mvvmsample.pages.detail.DetailActivity
 import com.tr1984.mvvmsample.viewmodel.GridRecyclerViewModel
 import com.tr1984.mvvmsample.viewmodel.PlainTextViewModel
 import com.tr1984.mvvmsample.viewmodel.SimpleImageViewModel
@@ -58,7 +59,10 @@ class ListViewModel : BaseViewModel() {
 
         Foods.dummy.forEach {
             items.add(SimpleImageViewModel().apply {
-                imageUrl.set(it.imageUrl)
+                food = it
+                actionItemClick = {
+                    this@ListViewModel.startPageSubject.onNext(StartPageBundle(DetailActivity::class.java))
+                }
             })
         }
     }
