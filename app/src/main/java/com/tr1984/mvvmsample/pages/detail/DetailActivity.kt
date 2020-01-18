@@ -9,6 +9,8 @@ class DetailActivity : BaseActivity<DetailViewModel, ActivityDetailBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        viewModel.start(intent.getLongExtra("food_id", 0))
     }
 
     override var viewModel = DetailViewModel()
