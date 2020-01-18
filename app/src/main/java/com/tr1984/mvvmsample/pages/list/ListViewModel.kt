@@ -1,5 +1,6 @@
 package com.tr1984.mvvmsample.pages.list
 
+import android.content.Intent
 import androidx.databinding.ObservableArrayList
 import com.tr1984.mvvmsample.R
 import com.tr1984.mvvmsample.base.BaseAdapter
@@ -61,7 +62,13 @@ class ListViewModel : BaseViewModel() {
             items.add(SimpleImageViewModel().apply {
                 food = it
                 actionItemClick = {
-                    this@ListViewModel.startPageSubject.onNext(StartPageBundle(DetailActivity::class.java))
+                    this@ListViewModel.startPageSubject.onNext(
+                        StartPageBundle(
+                            clazz = DetailActivity::class.java,
+                            intent = Intent().apply {
+                                putExtra("food_id", it.id)
+                            })
+                    )
                 }
             })
         }
