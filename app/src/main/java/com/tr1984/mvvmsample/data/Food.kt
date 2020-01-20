@@ -7,6 +7,6 @@ import androidx.room.PrimaryKey
 data class Food(@PrimaryKey(autoGenerate = true) val id: Long, val imageUrl: String, val name: String = "", val likeCount: Int = 0) {
 
     companion object {
-        val dummy = Food(1, "https://cdn.pixabay.com/photo/2016/12/26/17/28/food-1932466__480.jpg", "", 0)
+        val dummy = Food(1, "https://cdn.pixabay.com/photo/2016/12/26/17/28/food-1932466__480.jpg", "food-1932466", 2122)
     }
 }
