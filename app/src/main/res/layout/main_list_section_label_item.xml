@@ -7,24 +7,28 @@
 
         <variable
             name="viewModel"
-            type="com.tr1984.mvvmsample.viewmodel.PlainTextViewModel" />
+            type="com.tr1984.mvvmsample.viewmodel.MainListSectionLabelItemViewModel" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:onClick="@{() -> viewModel.actionItemClick.invoke()}">
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
 
         <TextView
+            android:id="@+id/favorites"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{viewModel.text}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginLeft="16dp"
+            android:text="@{viewModel.label}"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="list_type_01" />
+            tools:text="Favorites" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -5,11 +5,11 @@ import com.tr1984.mvvmsample.R
 import com.tr1984.mvvmsample.base.BaseAdapter
 import com.tr1984.mvvmsample.base.BaseViewModel
 
-class GridRecyclerViewModel: BaseViewModel()  {
+class MainListFavoriteItemsViewModel: BaseViewModel()  {
 
     var adapter = BaseAdapter(
         hashMapOf(
-            PlainTextViewModel::class.java.simpleName to R.layout.item_grid_recyclerview_cell
+            MainListImageItemViewModel::class.java.simpleName to R.layout.main_list_favorite_image_item
         )
     )
     var items = ObservableArrayList<BaseViewModel>()
