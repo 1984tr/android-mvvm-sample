@@ -24,63 +24,53 @@
             app:layout_constraintTop_toTopOf="parent"
             app:loadImage="@{viewModel.imageUrl}" />
 
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="#3a000000"
-            app:layout_constraintBottom_toBottomOf="@id/like_count"
-            app:layout_constraintEnd_toEndOf="@id/filename"
-            app:layout_constraintStart_toStartOf="@id/filename"
-            app:layout_constraintTop_toTopOf="@id/filename"/>
-
-        <TextView
-            android:id="@+id/filename"
+        <androidx.cardview.widget.CardView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="@{viewModel.fileName}"
-            android:textSize="14sp"
-            android:textColor="@android:color/white"
+            android:layout_margin="16dp"
+            app:cardBackgroundColor="#3a000000"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.5"
-            tools:text="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" />
+            app:layout_constraintStart_toStartOf="parent">
 
-        <ImageView
-            android:id="@+id/img_like"
-            android:layout_width="12dp"
-            android:layout_height="12dp"
-            android:layout_marginLeft="8dp"
-            android:src="@drawable/ic_favorite"
-            app:layout_constraintStart_toStartOf="@id/filename"
-            app:layout_constraintTop_toBottomOf="@id/filename" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
 
-        <TextView
-            android:id="@+id/like_count"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="8dp"
-            android:textSize="12sp"
-            android:text="@{viewModel.likeCount}"
-            android:textColor="@android:color/white"
-            app:layout_constraintTop_toTopOf="@id/img_like"
-            app:layout_constraintBottom_toBottomOf="@id/img_like"
-            app:layout_constraintStart_toEndOf="@id/img_like"
-            tools:text="10" />
+                <ImageView
+                    android:id="@+id/img_like"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_favorite"
+                    app:selected="@{viewModel.favorite}" />
 
-        <ImageButton
-            android:id="@+id/btn_share"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_margin="16dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:elevation="4dp"
-            android:src="@drawable/ic_share_white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+                <TextView
+                    android:id="@+id/filename"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:text="@{viewModel.fileName}"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp"
+                    tools:text="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" />
+            </LinearLayout>
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackground"
+                android:onClick="@{() -> viewModel.toggleFavorite()}" />
+
+        </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
