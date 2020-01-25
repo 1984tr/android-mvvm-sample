@@ -9,7 +9,7 @@ import com.tr1984.mvvmsample.data.Food
 @Database(entities = [Food::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun getShopDao(): FoodDao
+    abstract fun getFoodDao(): FoodDao
 
     companion object {
 
@@ -24,6 +24,7 @@ abstract class AppDatabase : RoomDatabase() {
                         "mvvm_sample.db"
                     ).build()
                 }
+
             }
             return INSTANCE
         }
