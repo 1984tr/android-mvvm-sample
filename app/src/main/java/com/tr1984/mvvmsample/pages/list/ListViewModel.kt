@@ -6,11 +6,14 @@ import com.tr1984.mvvmsample.R
 import com.tr1984.mvvmsample.base.BaseAdapter
 import com.tr1984.mvvmsample.base.BaseViewModel
 import com.tr1984.mvvmsample.data.Food
-import com.tr1984.mvvmsample.data.Foods
+import com.tr1984.mvvmsample.data.source.FoodsRepository
 import com.tr1984.mvvmsample.pages.detail.DetailActivity
+import com.tr1984.mvvmsample.util.disposeBag
+import com.tr1984.mvvmsample.util.uiSubscribeWithError
 import com.tr1984.mvvmsample.viewmodel.MainListFavoriteItemsViewModel
 import com.tr1984.mvvmsample.viewmodel.MainListImageItemViewModel
 import com.tr1984.mvvmsample.viewmodel.MainListSectionLabelItemViewModel
+import io.reactivex.Observable
 
 class ListViewModel : BaseViewModel() {
 
@@ -28,27 +31,32 @@ class ListViewModel : BaseViewModel() {
         items.add(getSection("FAVORITES"))
         items.add(getFavoritesItems())
 
-        items.add(getSection("HOT"))
-        Foods.dummy.forEach {
-            items.add(getHotItem(it))
+        items.add(getSection("LIST"))
+        FoodsRepository.instance.getFoods(false)?.run {
+            uiSubscribeWithError {
+                items.addAll(getNormalItems(it))
+            }.disposeBag(this@ListViewModel.compositeDisposable)
         }
     }
 
-    private fun getSection(label: String) : BaseViewModel {
+    private fun getSection(label: String): BaseViewModel {
         return MainListSectionLabelItemViewModel().apply {
             this.label.set(label)
         }
     }
 
-    private fun getFavoritesItems() : BaseViewModel {
+    private fun getFavoritesItems(): BaseViewModel {
         return MainListFavoriteItemsViewModel().apply {
-            Foods.dummy.forEach {
-                items.add(getFavoritesItem(it))
+            FoodsRepository.instance.getFoods(true)
+                ?.flatMapObservable { Observable.fromIterable(it) }?.run {
+                uiSubscribeWithError {
+                    items.add(getFavoritesItem(it))
+                }.disposeBag(this@ListViewModel.compositeDisposable)
             }
         }
     }
 
-    private fun getFavoritesItem(food: Food) : BaseViewModel {
+    private fun getFavoritesItem(food: Food): BaseViewModel {
         return MainListImageItemViewModel().apply {
             this.food = food
             actionItemClick = {
@@ -63,17 +71,19 @@ class ListViewModel : BaseViewModel() {
         }
     }
 
-    private fun getHotItem(food: Food) : BaseViewModel {
-        return MainListImageItemViewModel().apply {
-            this.food = food
-            actionItemClick = {
-                this@ListViewModel.startPageSubject.onNext(
-                    StartPageBundle(
-                        clazz = DetailActivity::class.java,
-                        intent = Intent().apply {
-                            putExtra("food_id", it.id)
-                        })
-                )
+    private fun getNormalItems(foods: List<Food>): List<BaseViewModel> {
+        return foods.map { food ->
+            MainListImageItemViewModel().apply {
+                this.food = food
+                actionItemClick = {
+                    this@ListViewModel.startPageSubject.onNext(
+                        StartPageBundle(
+                            clazz = DetailActivity::class.java,
+                            intent = Intent().apply {
+                                putExtra("food_id", food.id)
+                            })
+                    )
+                }
             }
         }
     }

@@ -3,26 +3,36 @@ package com.tr1984.mvvmsample.data.source
 import android.content.Context
 import com.tr1984.mvvmsample.data.Food
 import com.tr1984.mvvmsample.data.source.local.AppDatabase
-import io.reactivex.Observable
+import io.reactivex.Completable
 import io.reactivex.Single
 
 class FoodsRepository private constructor() {
 
-    private lateinit var database: AppDatabase
+    private lateinit var context: Context
+
+    private val database: AppDatabase? by lazy {
+        AppDatabase.getInstance(context)
+    }
 
     fun initialize(context: Context) {
-        AppDatabase.getInstance(context)?.let {
-            database  = it
-        }
+        this.context = context
     }
 
-    fun getFoods() : Observable<Food> {
-        return database.getShopDao().getFoods()
+    fun getFoods() : Single<List<Food>>? {
+        return database?.getFoodDao()?.getFoods()
     }
 
-    fun getFood(id: Long) : Single<Food> {
+    fun getFoods(isFavorite: Boolean) : Single<List<Food>>? {
+        return database?.getFoodDao()?.getFoods(isFavorite)
+    }
+
+    fun putFoods(foods: List<Food>) : Completable? {
+        return database?.getFoodDao()?.insertAll(foods)
+    }
+
+    fun getFood(id: Long) : Single<Food>? {
         //return ApiClient.instance.api.getFood(id)
-        return database.getShopDao().getFood(id)
+        return database?.getFoodDao()?.getFood(id)
     }
 
     companion object {

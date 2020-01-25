@@ -19,13 +19,11 @@ android {
     buildTypes {
         debug {
             minifyEnabled true
-            useProguard false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
 
         release {
             minifyEnabled true
-            useProguard true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -61,7 +59,7 @@ dependencies {
     implementation 'com.jakewharton.rxbinding2:rxbinding:2.1.1'
 
     implementation "androidx.room:room-runtime:2.2.3"
-    annotationProcessor "androidx.room:room-compiler:2.2.3"
+    kapt "androidx.room:room-compiler:2.2.3"
     implementation "androidx.room:room-rxjava2:2.2.3"
 
     testImplementation 'junit:junit:4.12'
