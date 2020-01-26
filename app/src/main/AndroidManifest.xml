@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.tr1984.mvvmsample">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:name=".MainApplication"
         android:allowBackup="true"
@@ -18,7 +20,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".pages.main.MainActivity" />
-        <activity android:name=".pages.list.List1Activity" />
+        <activity android:name=".pages.list.ListActivity" />
+        <activity android:name=".pages.detail.DetailActivity" />
     </application>
 
 </manifest>

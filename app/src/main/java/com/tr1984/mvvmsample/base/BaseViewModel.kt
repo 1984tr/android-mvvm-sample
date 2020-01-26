@@ -6,14 +6,18 @@ import io.reactivex.subjects.PublishSubject
 
 open class BaseViewModel {
 
-    var putPageSubject = PublishSubject.create<Triple<Class<*>, Int, Intent?>>()
-    var popPageSubject = PublishSubject.create<Pair<Int?, Intent?>>()
+    var startPageSubject = PublishSubject.create<StartPageBundle>()
+    var finishPageSubject = PublishSubject.create<FinishPageBundle>()
 
     var popupSubject = PublishSubject.create<PopupBundle>()
     var errorSubject = PublishSubject.create<ErrorBundle>()
     var toastSubject = PublishSubject.create<String>()
 
-    var compositeDiposable = CompositeDisposable()
+    var compositeDisposable = CompositeDisposable()
+
+    class StartPageBundle(var clazz: Class<*>, var requestCode: Int? = null, var intent: Intent? = null)
+
+    class FinishPageBundle(var resultCode: Int? = null, var intent: Intent? = null)
 
     class PopupBundle(var title: String?, var message: String?,
                       var positiveLabel: String? = null, var positiveCallback: (() -> Unit)?,
