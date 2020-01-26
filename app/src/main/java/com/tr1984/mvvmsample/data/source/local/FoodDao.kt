@@ -11,10 +11,10 @@ import io.reactivex.Single
 @Dao
 interface FoodDao {
 
-    @Query("SELECT * FROM foods")
+    @Query("SELECT * FROM foods ORDER BY updatedAt DESC")
     fun getFoods(): Single<List<Food>>
 
-    @Query("SELECT * FROM foods WHERE isFavorite = :isFavorite")
+    @Query("SELECT * FROM foods WHERE isFavorite = :isFavorite ORDER BY updatedAt DESC")
     fun getFoods(isFavorite: Boolean): Single<List<Food>>
 
     @Query("SELECT * FROM foods WHERE id = :id")
@@ -25,6 +25,10 @@ interface FoodDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(food: List<Food>) : Completable
+
+    //@Query("UPDATE orders SET order_price=:price WHERE order_id = :id")
+    @Query("UPDATE foods SET isFavorite=:isFavorite, updatedAt=:updatedAt WHERE id = :id")
+    fun update(id: Long, isFavorite: Boolean, updatedAt: Long = System.currentTimeMillis()) : Completable
 
     @Query("DELETE FROM foods WHERE id = :id")
     fun delete(id: Long) : Completable

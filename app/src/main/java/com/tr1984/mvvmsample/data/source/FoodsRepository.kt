@@ -26,8 +26,12 @@ class FoodsRepository private constructor() {
         return database?.getFoodDao()?.getFoods(isFavorite)
     }
 
-    fun putFoods(foods: List<Food>) : Completable? {
+    fun postFoods(foods: List<Food>) : Completable? {
         return database?.getFoodDao()?.insertAll(foods)
+    }
+
+    fun putFood(id: Long, isFavorite: Boolean) : Completable? {
+        return database?.getFoodDao()?.update(id, isFavorite)
     }
 
     fun getFood(id: Long) : Single<Food>? {

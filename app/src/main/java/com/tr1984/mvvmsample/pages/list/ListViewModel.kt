@@ -8,6 +8,7 @@ import com.tr1984.mvvmsample.base.BaseViewModel
 import com.tr1984.mvvmsample.data.Food
 import com.tr1984.mvvmsample.data.source.FoodsRepository
 import com.tr1984.mvvmsample.pages.detail.DetailActivity
+import com.tr1984.mvvmsample.util.RxBus
 import com.tr1984.mvvmsample.util.disposeBag
 import com.tr1984.mvvmsample.util.uiSubscribeWithError
 import com.tr1984.mvvmsample.viewmodel.MainListFavoriteItemsViewModel
@@ -25,6 +26,13 @@ class ListViewModel : BaseViewModel() {
         )
     )
     var items = ObservableArrayList<BaseViewModel>()
+
+    init {
+        RxBus.listen(RxBus.UpdateFood::class.java)
+            .uiSubscribeWithError {
+                start()
+            }.disposeBag(compositeDisposable)
+    }
 
     fun start() {
         items.clear()
