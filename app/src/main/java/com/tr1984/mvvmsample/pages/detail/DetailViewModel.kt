@@ -3,6 +3,7 @@ package com.tr1984.mvvmsample.pages.detail
 import androidx.databinding.ObservableField
 import com.tr1984.mvvmsample.base.BaseViewModel
 import com.tr1984.mvvmsample.data.source.FoodsRepository
+import com.tr1984.mvvmsample.util.RxBus
 import com.tr1984.mvvmsample.util.disposeBag
 import com.tr1984.mvvmsample.util.uiSubscribe
 
@@ -18,7 +19,6 @@ class DetailViewModel : BaseViewModel() {
         set(value) {
             field = value
             favorite.set(field)
-            updateFavorite()
         }
 
     fun start(foodId: Long) {
@@ -26,16 +26,20 @@ class DetailViewModel : BaseViewModel() {
         FoodsRepository.instance.getFood(foodId)?.uiSubscribe({
             this@DetailViewModel.fileName.set(it.name)
             this@DetailViewModel.imageUrl.set(it.imageUrl)
-            this@DetailViewModel.favorite.set(isFavorite)
+            this@DetailViewModel.isFavorite = it.isFavorite
         }, {
             toastSubject.onNext("Retry later :(")
         })?.disposeBag(compositeDisposable)
     }
 
     fun toggleFavorite() {
-        isFavorite = !isFavorite
-    }
-
-    private fun updateFavorite() {
+        foodId?.run {
+            FoodsRepository.instance.putFood(this, !isFavorite)?.uiSubscribe({
+                isFavorite = !isFavorite
+                RxBus.publish(RxBus.UpdateFood(this, isFavorite))
+            }, {
+                toastSubject.onNext("Retry later :(")
+            })?.disposeBag(compositeDisposable)
+        } ?: toastSubject.onNext("Retry later :(")
     }
 }

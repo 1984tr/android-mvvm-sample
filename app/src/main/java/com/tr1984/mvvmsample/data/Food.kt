@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "foods")
-data class Food(@PrimaryKey(autoGenerate = true) val id: Long, val imageUrl: String, val name: String = "", val isFavorite: Boolean = false) {
+data class Food(@PrimaryKey(autoGenerate = true) val id: Long, val imageUrl: String, val name: String = "", val isFavorite: Boolean = false, val updatedAt: Long = System.currentTimeMillis()) {
 
     companion object {
         val dummy = listOf(

@@ -12,4 +12,6 @@ object RxBus {
     }
 
     fun <T> listen(eventType: Class<T>): Observable<T> = publisher.ofType(eventType)
+
+    data class UpdateFood(val id: Long, val isFavorite: Boolean)
 }
