@@ -6,3 +6,5 @@
 4. Data Refreshing <- Rx EventBus
 5. Handle Event
 6. Room
+
+![](demo.gif)
