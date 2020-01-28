@@ -2,15 +2,14 @@ package com.tr1984.mvvmsample.base
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.tr1984.mvvmsample.BR
 import com.tr1984.mvvmsample.extensions.alert
+import com.tr1984.mvvmsample.extensions.disposeBag
 import com.tr1984.mvvmsample.extensions.toast
-import com.tr1984.mvvmsample.util.disposeBag
-import com.tr1984.mvvmsample.util.uiSubscribeWithError
+import com.tr1984.mvvmsample.extensions.uiSubscribeWithError
 
 abstract class BaseActivity<T : BaseViewModel, VB : ViewDataBinding> : AppCompatActivity() {
 
@@ -34,7 +33,6 @@ abstract class BaseActivity<T : BaseViewModel, VB : ViewDataBinding> : AppCompat
     }
 
     open fun subscribeSubjects() {
-        Log.d("trtr", "subscribeSubjects()")
         viewModel.run {
             startPageSubject
                 .uiSubscribeWithError {
@@ -78,7 +76,6 @@ abstract class BaseActivity<T : BaseViewModel, VB : ViewDataBinding> : AppCompat
 
             toastSubject
                 .uiSubscribeWithError {
-                    Log.d("trtr", "toastSubject onNext")
                     this@BaseActivity.toast(it)
                 }.disposeBag(compositeDisposable)
         }

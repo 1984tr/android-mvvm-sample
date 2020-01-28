@@ -4,10 +4,10 @@ import android.content.Intent
 import com.tr1984.mvvmsample.base.BaseViewModel
 import com.tr1984.mvvmsample.data.Food
 import com.tr1984.mvvmsample.data.source.FoodsRepository
+import com.tr1984.mvvmsample.extensions.disposeBag
+import com.tr1984.mvvmsample.extensions.uiSubscribe
+import com.tr1984.mvvmsample.extensions.uiSubscribeWithError
 import com.tr1984.mvvmsample.pages.list.ListActivity
-import com.tr1984.mvvmsample.util.disposeBag
-import com.tr1984.mvvmsample.util.uiSubscribe
-import com.tr1984.mvvmsample.util.uiSubscribeWithError
 import io.reactivex.Single
 import java.util.concurrent.TimeUnit
 
