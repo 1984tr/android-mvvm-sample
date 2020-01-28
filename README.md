@@ -1,4 +1,4 @@
-# My MVVM Sample
+# android-mvvm-sample
 0. Databinding
 1. Normal Page
 2. RecyclerView Page
