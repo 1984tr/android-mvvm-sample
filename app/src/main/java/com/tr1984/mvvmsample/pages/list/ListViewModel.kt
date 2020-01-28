@@ -7,10 +7,10 @@ import com.tr1984.mvvmsample.base.BaseAdapter
 import com.tr1984.mvvmsample.base.BaseViewModel
 import com.tr1984.mvvmsample.data.Food
 import com.tr1984.mvvmsample.data.source.FoodsRepository
+import com.tr1984.mvvmsample.extensions.disposeBag
+import com.tr1984.mvvmsample.extensions.uiSubscribeWithError
 import com.tr1984.mvvmsample.pages.detail.DetailActivity
 import com.tr1984.mvvmsample.util.RxBus
-import com.tr1984.mvvmsample.util.disposeBag
-import com.tr1984.mvvmsample.util.uiSubscribeWithError
 import com.tr1984.mvvmsample.viewmodel.MainListFavoriteItemsViewModel
 import com.tr1984.mvvmsample.viewmodel.MainListImageItemViewModel
 import com.tr1984.mvvmsample.viewmodel.MainListSectionLabelItemViewModel

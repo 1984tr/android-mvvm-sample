@@ -3,9 +3,9 @@ package com.tr1984.mvvmsample.pages.detail
 import androidx.databinding.ObservableField
 import com.tr1984.mvvmsample.base.BaseViewModel
 import com.tr1984.mvvmsample.data.source.FoodsRepository
+import com.tr1984.mvvmsample.extensions.disposeBag
+import com.tr1984.mvvmsample.extensions.uiSubscribe
 import com.tr1984.mvvmsample.util.RxBus
-import com.tr1984.mvvmsample.util.disposeBag
-import com.tr1984.mvvmsample.util.uiSubscribe
 
 class DetailViewModel : BaseViewModel() {
 
