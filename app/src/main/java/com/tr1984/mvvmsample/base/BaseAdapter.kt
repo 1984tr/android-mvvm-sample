@@ -10,63 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tr1984.mvvmsample.BR
 import com.tr1984.mvvmsample.R
 
-class BaseAdapter(
-    private val layoutMap: HashMap<String, Int>,
-    private val requestNext: (() -> Unit)? = null
-) :
-    RecyclerView.Adapter<BaseAdapter.Holder>() {
+class BaseAdapter() : RecyclerView.Adapter<BaseAdapter.Holder>() {
 
-    private var items = ObservableArrayList<BaseViewModel>()
-
-    private var listChangedCallback = object :
-        ObservableList.OnListChangedCallback<ObservableList<BaseViewModel>>() {
-
-        override fun onChanged(sender: ObservableList<BaseViewModel>) {
-            notifyDataSetChanged()
-        }
-
-        override fun onItemRangeChanged(
-            sender: ObservableList<BaseViewModel>,
-            positionStart: Int,
-            itemCount: Int
-        ) {
-            notifyItemRangeChanged(positionStart, itemCount)
-        }
-
-        override fun onItemRangeInserted(
-            sender: ObservableList<BaseViewModel>,
-            positionStart: Int,
-            itemCount: Int
-        ) {
-            notifyItemRangeInserted(positionStart, itemCount)
-        }
-
-        override fun onItemRangeMoved(
-            sender: ObservableList<BaseViewModel>,
-            fromPosition: Int,
-            toPosition: Int,
-            itemCount: Int
-        ) {
-            notifyItemRangeRemoved(fromPosition, itemCount)
-            notifyItemRangeInserted(toPosition, itemCount)
-        }
-
-        override fun onItemRangeRemoved(
-            sender: ObservableList<BaseViewModel>,
-            positionStart: Int,
-            itemCount: Int
-        ) {
-            notifyItemRangeRemoved(positionStart, itemCount)
-            if (lastItemCount > items.size) {
-                lastItemCount = items.size
-            }
-            if (items.size <= 0) {
-                lastItemCount = 0
-            }
-        }
-    }
-
-    private var lastItemCount = 0
+    private var items = ObservableArrayList<SubBaseViewModel>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         return Holder.create(parent, viewType)
@@ -75,7 +21,7 @@ class BaseAdapter(
     override fun getItemCount() = items.size
 
     override fun getItemViewType(position: Int): Int {
-        return layoutMap[items[position]::class.java.simpleName] ?: R.layout.view_empty
+        return items[position].layoutId
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
