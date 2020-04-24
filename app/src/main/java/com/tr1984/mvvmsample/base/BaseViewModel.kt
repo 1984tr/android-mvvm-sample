@@ -24,9 +24,11 @@ open class BaseViewModel(val compositeDisposable: CompositeDisposable) {
         class Alert(
             val title: String?,
             val message: String,
-            val positive: Pair<String, (() -> Unit)?>,
-            val negative: Pair<String, (() -> Unit)?>?
-        ) : Notifier()
+            val positive: Button? = null,
+            val negative: Button? = null
+        ) : Notifier() {
+            class Button(val message: String? = "확인", onClick: (() -> Unit)?)
+        }
 
         class Error(val throwable: Throwable?, val submit: (() -> Unit)?) : Notifier()
     }
