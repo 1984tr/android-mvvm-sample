@@ -6,8 +6,9 @@ import com.tr1984.mvvmsample.data.source.FoodsRepository
 import com.tr1984.mvvmsample.extensions.disposeBag
 import com.tr1984.mvvmsample.extensions.uiSubscribe
 import com.tr1984.mvvmsample.util.RxBus
+import io.reactivex.disposables.CompositeDisposable
 
-class DetailViewModel : BaseViewModel() {
+class DetailViewModel(override val compositeDisposable: CompositeDisposable) : BaseViewModel(compositeDisposable) {
 
     var fileName = ObservableField("")
     var imageUrl = ObservableField("")
@@ -28,7 +29,7 @@ class DetailViewModel : BaseViewModel() {
             this@DetailViewModel.imageUrl.set(it.imageUrl)
             this@DetailViewModel.isFavorite = it.isFavorite
         }, {
-            toastSubject.onNext("Retry later :(")
+            notifier.onNext(Notifier.Toast("Retry later :("))
         })?.disposeBag(compositeDisposable)
     }
 
@@ -38,8 +39,8 @@ class DetailViewModel : BaseViewModel() {
                 isFavorite = !isFavorite
                 RxBus.publish(RxBus.UpdateFood(this, isFavorite))
             }, {
-                toastSubject.onNext("Retry later :(")
+                notifier.onNext(Notifier.Toast("Retry later :("))
             })?.disposeBag(compositeDisposable)
-        } ?: toastSubject.onNext("Retry later :(")
+        } ?: notifier.onNext(Notifier.Toast("Retry later :("))
     }
 }

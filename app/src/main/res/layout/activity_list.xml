@@ -21,7 +21,7 @@
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
             app:adapter="@{viewModel.adapter}"
-            app:bindItems="@{viewModel.items}"
+            app:bindList="@{viewModel.items}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

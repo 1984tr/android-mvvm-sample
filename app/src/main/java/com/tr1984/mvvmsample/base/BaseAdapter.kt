@@ -4,13 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ObservableArrayList
-import androidx.databinding.ObservableList
 import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.tr1984.mvvmsample.BR
-import com.tr1984.mvvmsample.R
 
-class BaseAdapter() : RecyclerView.Adapter<BaseAdapter.Holder>() {
+class BaseAdapter : RecyclerView.Adapter<BaseAdapter.Holder>() {
 
     private var items = ObservableArrayList<SubBaseViewModel>()
 
@@ -27,33 +26,29 @@ class BaseAdapter() : RecyclerView.Adapter<BaseAdapter.Holder>() {
     override fun onBindViewHolder(holder: Holder, position: Int) {
         items.run {
             holder.bind(get(position))
-
-            if (lastItemCount < size && position == size - REQUEST_OFFSET) {
-                lastItemCount = size
-                requestNext?.invoke()
-            }
         }
     }
 
-    fun getItem(position: Int): BaseViewModel? {
+    fun getItem(position: Int): SubBaseViewModel? {
         if (position < items.size && position >= 0) {
             return items[position]
         }
         return null
     }
 
-    fun bind(items: ObservableArrayList<BaseViewModel>) {
-        if (this.items != items) {
-            items.addOnListChangedCallback(listChangedCallback)
-            this.items.removeOnListChangedCallback(listChangedCallback)
-            this.items = items
-            notifyDataSetChanged()
-        }
+    fun bind(newItems: ObservableArrayList<SubBaseViewModel>) {
+        val callback = DiffCallback(items, newItems)
+        val result = DiffUtil.calculateDiff(callback)
+
+        items.clear()
+        items.addAll(newItems)
+
+        result.dispatchUpdatesTo(this)
     }
 
     class Holder(private val binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(viewModel: BaseViewModel) {
+        fun bind(viewModel: SubBaseViewModel) {
             binding.setVariable(BR.viewModel, viewModel)
             binding.executePendingBindings()
         }
@@ -66,7 +61,29 @@ class BaseAdapter() : RecyclerView.Adapter<BaseAdapter.Holder>() {
         }
     }
 
+    inner class DiffCallback(
+        private val oldList: List<SubBaseViewModel>,
+        private val newList: List<SubBaseViewModel>
+    ) : DiffUtil.Callback() {
+
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return oldList[oldItemPosition].identification() == newList[newItemPosition].identification()
+        }
+
+        override fun getOldListSize(): Int {
+            return oldList.size
+        }
+
+        override fun getNewListSize(): Int {
+            return newList.size
+        }
+
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return oldList[oldItemPosition] == newList[newItemPosition]
+        }
+    }
+
     companion object {
-        const val REQUEST_OFFSET = 3
+        const val THRESHOLD = 3
     }
 }

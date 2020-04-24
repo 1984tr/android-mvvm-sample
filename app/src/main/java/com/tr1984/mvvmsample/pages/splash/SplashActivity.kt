@@ -12,7 +12,7 @@ class SplashActivity : BaseActivity<SplashViewModel, ActivitySplashBinding>() {
         viewModel.start()
     }
 
-    override var viewModel = SplashViewModel()
+    override var viewModel = SplashViewModel(compositeDisposable)
     override var layoutId = R.layout.activity_splash
 
 }

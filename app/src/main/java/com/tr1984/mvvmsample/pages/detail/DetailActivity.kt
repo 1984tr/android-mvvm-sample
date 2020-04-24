@@ -13,6 +13,6 @@ class DetailActivity : BaseActivity<DetailViewModel, ActivityDetailBinding>() {
         viewModel.start(intent.getLongExtra("food_id", 0))
     }
 
-    override var viewModel = DetailViewModel()
+    override var viewModel = DetailViewModel(compositeDisposable)
     override var layoutId = R.layout.activity_detail
 }

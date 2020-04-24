@@ -12,6 +12,6 @@ class ListActivity : BaseActivity<ListViewModel, ActivityListBinding>() {
         viewModel.start()
     }
 
-    override var viewModel = ListViewModel()
+    override var viewModel = ListViewModel(compositeDisposable)
     override var layoutId = R.layout.activity_list
 }

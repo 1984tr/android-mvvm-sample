@@ -1,6 +1,6 @@
 package com.tr1984.mvvmsample.base
 
-abstract class SubBaseViewModel(val layoutId: Int, val parent: BaseViewModel) {
+abstract class SubBaseViewModel(open val layoutId: Int, open val parent: BaseViewModel) {
 
     abstract fun identification() : String
 

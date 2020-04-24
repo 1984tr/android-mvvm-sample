@@ -10,6 +10,7 @@ import com.tr1984.mvvmsample.extensions.alert
 import com.tr1984.mvvmsample.extensions.disposeBag
 import com.tr1984.mvvmsample.extensions.toast
 import com.tr1984.mvvmsample.extensions.uiSubscribeWithError
+import io.reactivex.disposables.CompositeDisposable
 
 abstract class BaseActivity<T : BaseViewModel, VB : ViewDataBinding> : AppCompatActivity() {
 
@@ -17,6 +18,7 @@ abstract class BaseActivity<T : BaseViewModel, VB : ViewDataBinding> : AppCompat
     abstract var layoutId: Int
 
     protected lateinit var binding: VB
+    protected val compositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,55 +30,58 @@ abstract class BaseActivity<T : BaseViewModel, VB : ViewDataBinding> : AppCompat
     }
 
     override fun onDestroy() {
-        viewModel.compositeDisposable.clear()
+        compositeDisposable.clear()
         super.onDestroy()
     }
 
     open fun subscribeSubjects() {
         viewModel.run {
-            startPageSubject
+
+            navigator
                 .uiSubscribeWithError {
-                    val intent = (it.intent ?: Intent()).apply {
-                        setClass(this@BaseActivity, it.clazz)
+                    when (it) {
+                        is BaseViewModel.Navigator.Start -> {
+                            val intent = (it.intent ?: Intent()).apply {
+                                setClass(this@BaseActivity, it.clazz)
+                            }
+                            if ((it.requestCode ?: 0) > 0) {
+                                startActivityForResult(intent, it.requestCode ?: 0)
+                            } else {
+                                startActivity(intent)
+                            }
+                        }
+                        is BaseViewModel.Navigator.Finish -> {
+                            it.resultCode?.let { rc ->
+                                setResult(rc, it.intent)
+                                finish()
+                            } ?: finish()
+                        }
                     }
-                    if ((it.requestCode ?: 0) > 0) {
-                        startActivityForResult(intent, it.requestCode ?: 0)
-                    } else {
-                        startActivity(intent)
+                }.disposeBag(compositeDisposable)
+
+            notifier
+                .uiSubscribeWithError {
+                    when (it) {
+                        is BaseViewModel.Notifier.Toast -> {
+                            this@BaseActivity.toast(it.message)
+                        }
+                        is BaseViewModel.Notifier.Alert -> {
+                            this@BaseActivity.alert(
+                                it.title,
+                                it.message ?: "",
+                                it.positive?.label,
+                                it.positive?.onClick,
+                                it.negative?.label,
+                                it.negative?.onClick
+                            )
+                        }
+                        is BaseViewModel.Notifier.Error -> {
+                            this@BaseActivity.alert(
+                                message = it.throwable?.localizedMessage,
+                                positiveCallback = it.onClick
+                            )
+                        }
                     }
-                }.disposeBag(compositeDisposable)
-
-            finishPageSubject
-                .uiSubscribeWithError {
-                    it.resultCode?.let { rc ->
-                        setResult(rc, it.intent)
-                        finish()
-                    } ?: finish()
-                }.disposeBag(compositeDisposable)
-
-            popupSubject
-                .uiSubscribeWithError {
-                    this@BaseActivity.alert(
-                        it.title,
-                        it.message ?: "",
-                        it.positiveLabel,
-                        it.positiveCallback,
-                        it.negativeLabel,
-                        it.negativeCallback
-                    )
-                }.disposeBag(compositeDisposable)
-
-            errorSubject
-                .uiSubscribeWithError {
-                    this@BaseActivity.alert(
-                        message = it.throwable.localizedMessage,
-                        positiveCallback = it.callback
-                    )
-                }.disposeBag(compositeDisposable)
-
-            toastSubject
-                .uiSubscribeWithError {
-                    this@BaseActivity.toast(it)
                 }.disposeBag(compositeDisposable)
         }
     }

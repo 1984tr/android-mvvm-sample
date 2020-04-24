@@ -9,9 +9,10 @@ import com.tr1984.mvvmsample.extensions.uiSubscribe
 import com.tr1984.mvvmsample.extensions.uiSubscribeWithError
 import com.tr1984.mvvmsample.pages.list.ListActivity
 import io.reactivex.Single
+import io.reactivex.disposables.CompositeDisposable
 import java.util.concurrent.TimeUnit
 
-class SplashViewModel : BaseViewModel() {
+class SplashViewModel(override val compositeDisposable: CompositeDisposable) : BaseViewModel(compositeDisposable) {
 
     fun start() {
         FoodsRepository.instance.getFoods()?.uiSubscribe({
@@ -37,10 +38,10 @@ class SplashViewModel : BaseViewModel() {
     private fun moveToList() {
         Single.timer(1, TimeUnit.SECONDS)
             .doFinally {
-                startPageSubject.onNext(StartPageBundle(ListActivity::class.java, null, Intent().apply {
+                navigator.onNext(Navigator.Start(ListActivity::class.java, null, Intent().apply {
                     addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 }))
-                finishPageSubject.onNext(FinishPageBundle())
+                navigator.onNext(Navigator.Finish())
             }.uiSubscribeWithError {
 
             }.disposeBag(compositeDisposable)
