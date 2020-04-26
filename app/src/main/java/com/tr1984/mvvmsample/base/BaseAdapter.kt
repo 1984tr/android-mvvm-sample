@@ -24,8 +24,9 @@ class BaseAdapter : RecyclerView.Adapter<BaseAdapter.Holder>() {
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        items.run {
-            holder.bind(get(position))
+        items[position].run {
+            holder.binding.setVariable(BR.viewModel, this)
+            holder.binding.executePendingBindings()
         }
     }
 
@@ -46,12 +47,7 @@ class BaseAdapter : RecyclerView.Adapter<BaseAdapter.Holder>() {
         result.dispatchUpdatesTo(this)
     }
 
-    class Holder(private val binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(viewModel: SubBaseViewModel) {
-            binding.setVariable(BR.viewModel, viewModel)
-            binding.executePendingBindings()
-        }
+    class Holder(val binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root) {
 
         companion object {
             fun create(parent: ViewGroup, layoutId: Int): Holder {

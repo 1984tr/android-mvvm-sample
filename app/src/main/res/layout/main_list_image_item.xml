@@ -83,7 +83,6 @@
                     app:layout_constraintTop_toTopOf="@id/img_bottom_background"
                     tools:text="FileName" />
 
-
                 <ImageButton
                     android:id="@+id/btn_like"
                     android:layout_width="36dp"
@@ -94,7 +93,8 @@
                     android:src="@drawable/ic_favorite"
                     app:layout_constraintBottom_toBottomOf="@id/img_bottom_background"
                     app:layout_constraintEnd_toEndOf="@id/img_bottom_background"
-                    app:layout_constraintTop_toTopOf="@id/img_bottom_background" />
+                    app:layout_constraintTop_toTopOf="@id/img_bottom_background"
+                    app:selected="@{viewModel.isSelected()}" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

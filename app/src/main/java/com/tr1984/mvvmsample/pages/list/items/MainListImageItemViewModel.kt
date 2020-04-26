@@ -1,5 +1,6 @@
 package com.tr1984.mvvmsample.viewmodel
 
+import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import com.tr1984.mvvmsample.base.BaseViewModel
 import com.tr1984.mvvmsample.base.SubBaseViewModel
@@ -12,8 +13,10 @@ class MainListImageItemViewModel(override val layoutId: Int, override val parent
         set(value) {
             field = value
             imageUrl.set(value?.imageUrl)
+            isSelected.set(value?.isFavorite ?: false)
         }
     var imageUrl = ObservableField("")
+    var isSelected = ObservableBoolean(false)
     var actionItemClick: ((Food) -> Unit)? = null
     var actionFavoriteClick: ((Food) -> Unit)? = null
 
