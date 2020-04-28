@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.tr1984.mvvmsample.viewmodel.MainListImageItemViewModel" />
+            type="com.tr1984.mvvmsample.viewmodel.ImageItemViewModel" />
 
     </data>
 

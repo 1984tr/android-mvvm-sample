@@ -19,7 +19,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".pages.list.ListActivity" />
+        <activity android:name=".pages.main.MainActivity" />
         <activity android:name=".pages.detail.DetailActivity" />
     </application>
 

@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.tr1984.mvvmsample.viewmodel.MainListSectionLabelItemViewModel" />
+            type="com.tr1984.mvvmsample.viewmodel.SectionLabelItemViewModel" />
 
     </data>
 

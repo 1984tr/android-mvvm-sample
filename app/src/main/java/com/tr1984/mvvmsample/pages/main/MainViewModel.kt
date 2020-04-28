@@ -1,4 +1,4 @@
-package com.tr1984.mvvmsample.pages.list
+package com.tr1984.mvvmsample.pages.main
 
 import android.content.Intent
 import androidx.databinding.ObservableArrayList
@@ -12,13 +12,13 @@ import com.tr1984.mvvmsample.extensions.disposeBag
 import com.tr1984.mvvmsample.extensions.uiSubscribeWithError
 import com.tr1984.mvvmsample.pages.detail.DetailActivity
 import com.tr1984.mvvmsample.util.RxBus
-import com.tr1984.mvvmsample.viewmodel.MainListFavoriteItemsViewModel
-import com.tr1984.mvvmsample.viewmodel.MainListImageItemViewModel
-import com.tr1984.mvvmsample.viewmodel.MainListSectionLabelItemViewModel
+import com.tr1984.mvvmsample.viewmodel.FavoritesViewModel
+import com.tr1984.mvvmsample.viewmodel.ImageItemViewModel
+import com.tr1984.mvvmsample.viewmodel.SectionLabelItemViewModel
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 
-class ListViewModel(override val compositeDisposable: CompositeDisposable) : BaseViewModel(compositeDisposable) {
+class MainViewModel(override val compositeDisposable: CompositeDisposable) : BaseViewModel(compositeDisposable) {
 
     var adapter = BaseAdapter()
     var items = ObservableArrayList<SubBaseViewModel>()
@@ -39,32 +39,32 @@ class ListViewModel(override val compositeDisposable: CompositeDisposable) : Bas
         FoodsRepository.instance.getFoods(false)?.run {
             uiSubscribeWithError {
                 items.addAll(getNormalItems(it))
-            }.disposeBag(this@ListViewModel.compositeDisposable)
+            }.disposeBag(this@MainViewModel.compositeDisposable)
         }
     }
 
     private fun getSection(label: String): SubBaseViewModel {
-        return MainListSectionLabelItemViewModel(R.layout.main_list_section_label_item, this).apply {
+        return SectionLabelItemViewModel(R.layout.main_list_section_label_item, this).apply {
             this.label.set(label)
         }
     }
 
     private fun getFavoritesItems(): SubBaseViewModel {
-        return MainListFavoriteItemsViewModel(R.layout.main_list_favorite_items, this).apply {
+        return FavoritesViewModel(R.layout.main_list_favorite_items, this).apply {
             FoodsRepository.instance.getFoods(true)
                 ?.flatMapObservable { Observable.fromIterable(it) }?.run {
                 uiSubscribeWithError {
                     items.add(getFavoritesItem(it))
-                }.disposeBag(this@ListViewModel.compositeDisposable)
+                }.disposeBag(this@MainViewModel.compositeDisposable)
             }
         }
     }
 
     private fun getFavoritesItem(food: Food): SubBaseViewModel {
-        return MainListImageItemViewModel(R.layout.main_list_image_item, this).apply {
+        return ImageItemViewModel(R.layout.main_list_image_item, this).apply {
             this.food = food
             actionItemClick = {
-                this@ListViewModel.navigator.onNext(
+                this@MainViewModel.navigator.onNext(
                     Navigator.Start(
                         clazz = DetailActivity::class.java,
                         intent = Intent().apply {
@@ -77,10 +77,10 @@ class ListViewModel(override val compositeDisposable: CompositeDisposable) : Bas
 
     private fun getNormalItems(foods: List<Food>): List<SubBaseViewModel> {
         return foods.map { food ->
-            MainListImageItemViewModel(R.layout.main_list_image_item, this).apply {
+            ImageItemViewModel(R.layout.main_list_image_item, this).apply {
                 this.food = food
                 actionItemClick = {
-                    this@ListViewModel.navigator.onNext(
+                    this@MainViewModel.navigator.onNext(
                         Navigator.Start(
                             clazz = DetailActivity::class.java,
                             intent = Intent().apply {

@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.tr1984.mvvmsample.viewmodel.MainListFavoriteItemsViewModel" />
+            type="com.tr1984.mvvmsample.viewmodel.FavoritesViewModel" />
 
     </data>
 

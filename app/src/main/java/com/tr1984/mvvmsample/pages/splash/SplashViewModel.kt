@@ -7,7 +7,7 @@ import com.tr1984.mvvmsample.data.source.FoodsRepository
 import com.tr1984.mvvmsample.extensions.disposeBag
 import com.tr1984.mvvmsample.extensions.uiSubscribe
 import com.tr1984.mvvmsample.extensions.uiSubscribeWithError
-import com.tr1984.mvvmsample.pages.list.ListActivity
+import com.tr1984.mvvmsample.pages.main.MainActivity
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import java.util.concurrent.TimeUnit
@@ -38,7 +38,7 @@ class SplashViewModel(override val compositeDisposable: CompositeDisposable) : B
     private fun moveToList() {
         Single.timer(1, TimeUnit.SECONDS)
             .doFinally {
-                navigator.onNext(Navigator.Start(ListActivity::class.java, null, Intent().apply {
+                navigator.onNext(Navigator.Start(MainActivity::class.java, null, Intent().apply {
                     addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 }))
                 navigator.onNext(Navigator.Finish())

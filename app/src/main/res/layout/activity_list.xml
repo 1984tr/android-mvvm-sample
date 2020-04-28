@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.tr1984.mvvmsample.pages.list.ListViewModel" />
+            type="com.tr1984.mvvmsample.pages.main.MainViewModel" />
 
     </data>
 
