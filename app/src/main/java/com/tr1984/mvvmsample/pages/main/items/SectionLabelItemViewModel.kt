@@ -1,4 +1,4 @@
-package com.tr1984.mvvmsample.viewmodel
+package com.tr1984.mvvmsample.pages.main.items
 
 import androidx.databinding.ObservableField
 import com.tr1984.mvvmsample.base.BaseViewModel
@@ -10,6 +10,6 @@ class SectionLabelItemViewModel(override val layoutId: Int, override val parent:
     var label = ObservableField("")
 
     override fun identification(): String {
-        return "MainListSectionLabelItemViewModel:${hashCode()}"
+        return "SectionLabelItemViewModel:${hashCode()}"
     }
 }

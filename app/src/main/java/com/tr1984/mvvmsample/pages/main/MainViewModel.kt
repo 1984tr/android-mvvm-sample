@@ -11,10 +11,10 @@ import com.tr1984.mvvmsample.data.source.FoodsRepository
 import com.tr1984.mvvmsample.extensions.disposeBag
 import com.tr1984.mvvmsample.extensions.uiSubscribeWithError
 import com.tr1984.mvvmsample.pages.detail.DetailActivity
+import com.tr1984.mvvmsample.pages.main.items.FavoritesViewModel
+import com.tr1984.mvvmsample.pages.main.items.ImageItemViewModel
+import com.tr1984.mvvmsample.pages.main.items.SectionLabelItemViewModel
 import com.tr1984.mvvmsample.util.RxBus
-import com.tr1984.mvvmsample.viewmodel.FavoritesViewModel
-import com.tr1984.mvvmsample.viewmodel.ImageItemViewModel
-import com.tr1984.mvvmsample.viewmodel.SectionLabelItemViewModel
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 

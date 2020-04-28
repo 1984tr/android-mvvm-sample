@@ -1,4 +1,4 @@
-package com.tr1984.mvvmsample.viewmodel
+package com.tr1984.mvvmsample.pages.main.items
 
 import androidx.databinding.ObservableArrayList
 import com.tr1984.mvvmsample.base.BaseAdapter
@@ -12,6 +12,6 @@ class FavoritesViewModel(override val layoutId: Int, override val parent: BaseVi
     var items = ObservableArrayList<SubBaseViewModel>()
 
     override fun identification(): String {
-        return "MainListFavoriteItemsViewModel${hashCode()}"
+        return "FavoritesViewModel:${hashCode()}"
     }
 }

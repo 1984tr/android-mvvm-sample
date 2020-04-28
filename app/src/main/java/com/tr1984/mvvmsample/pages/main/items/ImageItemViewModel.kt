@@ -1,4 +1,4 @@
-package com.tr1984.mvvmsample.viewmodel
+package com.tr1984.mvvmsample.pages.main.items
 
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
@@ -21,6 +21,6 @@ class ImageItemViewModel(override val layoutId: Int, override val parent: BaseVi
     var actionFavoriteClick: ((Food) -> Unit)? = null
 
     override fun identification(): String {
-        return "MainListImageItemViewModel${hashCode()}"
+        return "ImageItemViewModel:${hashCode()}"
     }
 }

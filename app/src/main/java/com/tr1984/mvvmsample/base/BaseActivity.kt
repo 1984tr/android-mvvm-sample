@@ -68,7 +68,7 @@ abstract class BaseActivity<T : BaseViewModel, VB : ViewDataBinding> : AppCompat
                         is BaseViewModel.Notifier.Alert -> {
                             this@BaseActivity.alert(
                                 it.title,
-                                it.message ?: "",
+                                it.message,
                                 it.positive?.label,
                                 it.positive?.onClick,
                                 it.negative?.label,
