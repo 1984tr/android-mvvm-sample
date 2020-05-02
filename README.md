@@ -1,4 +1,5 @@
 # android-mvvm-sample
+## Refactoring이 필요함!
 0. Databinding
 1. Normal Page
 2. RecyclerView Page
